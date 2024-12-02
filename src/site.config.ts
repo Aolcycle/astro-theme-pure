@@ -1,4 +1,4 @@
-import type { SiteConfig, MenuLinks, SocialLinks } from '@/types'
+import type { CardListData, FooterConfig, IntegrationConfig, MenuLinks, SiteConfig } from '@/types'
 
 export const siteConfig: SiteConfig = {
   // === Required meta properties ===
@@ -24,43 +24,90 @@ export const siteConfig: SiteConfig = {
     }
   },
 
+  // Mirror (remove ending trailing slash)
+  npmCDN: 'https://cdn.jsdelivr.net/npm',
+  // Recommend:
+  // - https://cdn.jsdelivr.net/npm
+  // - https://cdn.smartcis.cn/npm
+  // - https://unkpg.com
+  // - https://cdn.cbd.int
+
   // === Customize options ===
-  pageSize: 8, // blog page size for pagination
-  externalLinkArrow: true, // show external link arrow
+  blog: {
+    pageSize: 8 // blog page size for pagination
+  },
+
+  links: {
+    // Link info
+    applyTip: {
+      name: 'Astro Theme Pure',
+      desc: '求知若愚，虚怀若谷',
+      url: 'https://astro-theme-pure.vercel.app/',
+      avatar: 'https://cravatar.cn/avatar/1ffe42aa45a6b1444a786b1f32dfa8aa?s=200'
+    }
+  },
+
+  seo: {
+    // Telegram channel (Only to link with telegram instant view.
+    // If you don't know what it is, you can ignore it)
+    // telegramChannel: '@cworld0_cn'
+  },
+  content: {
+    externalLinkArrow: true, // show external link arrow
+    // https://github.com/tailwindlabs/tailwindcss-typography
+    typographyProse: 'prose prose-pure dark:prose-invert dark:prose-pure prose-headings:font-medium'
+  }
+}
+
+// Footer configuration, which contains the registration and social links
+// and will be used in Footer.astro
+export const footerConfig: FooterConfig = {
   // Registration information for ICP (optional)
   registration: {
     url: 'https://icp.gov.moe/?keyword=APTX4869',
     text: '萌ICP备APTX4869号'
   },
-
-  // Comment system service backend link
-  walineServerUrl: 'https://astro-theme-pure-waline.arthals.ink',
-
-  // Link info
-  applyFriendTip: {
-    name: 'Astro Theme Pure',
-    slogan: '求知若愚，虚怀若谷',
-    url: 'https://astro-theme-pure.vercel.app/',
-    avatar: 'https://cravatar.cn/avatar/1ffe42aa45a6b1444a786b1f32dfa8aa?s=200'
-  }
+  socialLinks: [
+    // {
+    //   name: 'mail',
+    //   url: 'mailto:test@example.com'
+    // },
+    {
+      name: 'github',
+      url: 'https://github.com/cworld1/astro-theme-pure'
+    }
+  ]
 }
 
-// Will be used in Footer.astro
-export const socialLinks: SocialLinks = [
-  // {
-  //   name: 'mail',
-  //   url: 'mailto:test@example.com'
-  // },
-  {
-    name: 'github',
-    url: 'https://github.com/cworld1/astro-theme-pure'
+export const integrationConfig: IntegrationConfig = {
+  waline: {
+    // Comment system service link (no link to disable)
+    server: 'https://astro-theme-pure-waline.arthals.ink/',
+    // Refer https://waline.js.org/en/guide/features/emoji.html
+    emoji: ['bmoji', 'weibo'],
+    // Refer https://waline.js.org/en/reference/client/props.html
+    additionalConfigs: {
+      // search: false,
+      pageview: true,
+      comment: true,
+      locale: {
+        reaction0: 'Like',
+        placeholder: 'Welcome to comment. (Email to receive replies. Login is unnecessary)'
+      },
+      imageUploader: false
+    }
   }
-]
+}
 
 export const menuLinks: MenuLinks = [
   {
     link: '/blog',
     label: 'Blog'
+  },
+  // Docs menu
+  {
+    link: '/docs/list',
+    label: 'Docs'
   },
   {
     link: '/projects',
@@ -75,3 +122,25 @@ export const menuLinks: MenuLinks = [
     label: 'About'
   }
 ]
+
+export const terms: CardListData = {
+  title: 'Terms content',
+  list: [
+    {
+      title: 'Privacy Policy',
+      link: '/terms/privacy-policy'
+    },
+    {
+      title: 'Terms and Conditions',
+      link: '/terms/terms-and-conditions'
+    },
+    {
+      title: 'Copyright',
+      link: '/terms/copyright'
+    },
+    {
+      title: 'Disclaimer',
+      link: '/terms/disclaimer'
+    }
+  ]
+}

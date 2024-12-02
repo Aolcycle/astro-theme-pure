@@ -1,0 +1,268 @@
+---
+layout: '@/pages/docs/DocsLayout.astro'
+
+title: 'User Components'
+description: 'Easily extend your content page more interactive'
+---
+
+import { Aside } from '@/components/user'
+
+Components let you easily reuse a piece of UI or styling consistently. You can use them not just in `.astro` files, but also in `.mdx` files.
+
+<Aside type='tip'>
+[MDX](https://mdxjs.com/) is a format that lets you write JSX embedded inside Markdown. And it has no difference with markdown files in other ways.
+</Aside>
+
+## Container
+
+### Card
+
+```jsx
+import { Card } from '@/components/user'
+
+<Card
+  as='a'
+  href='#card'
+  heading='Lorem ipsum'
+  subheading='Lorem ipsum dolor sit amet, vidit suscipit at mei.'
+  date='August 2021'
+>
+  You can even contain a list here
+</Card>
+```
+
+Like this:
+
+import { Card } from '@/components/user'
+
+<Card
+  as='a'
+  href='#card'
+  heading='Lorem ipsum'
+  subheading='Lorem ipsum dolor sit amet, vidit suscipit at mei.'
+  date='August 2021'
+>
+  You can even contain a list here
+</Card>
+
+### Collapse
+
+```jsx
+import { Collapse } from '@/components/user'
+
+<Collapse title='Lorem ipsum'> Lorem ipsum dolor sit amet, vidit suscipit at mei. </Collapse>
+```
+
+Like this:
+
+import { Collapse } from '@/components/user'
+
+<Collapse title='Lorem ipsum'>Lorem ipsum dolor sit amet, vidit suscipit at mei.</Collapse>
+
+### Aside
+
+```jsx
+import { Aside } from '@/components/user'
+
+<Aside>No type selected will default to 'note'. 😉</Aside>
+<Aside type="tip">
+Other content is also supported in aside! 😍
+
+// ```js
+// A code snippet, for example.
+// ```
+</Aside>
+<Aside type='caution' title='You should know it!'>Is your code buggy again? 🤨</Aside>
+<Aside type="danger">Have you used `rm -rf` to clean your computer? 😡</Aside>
+```
+
+Like this:
+
+<Aside>No type selected will default to 'note'. 😉</Aside>
+<Aside type="tip">
+Other content is also supported in aside! 😍
+
+```js
+// A code snippet, for example.
+```
+</Aside>
+<Aside type='caution' title='You should know it!'>Is your code buggy again? 🤨</Aside>
+<Aside type="danger">Have you used `rm -rf` to clean your computer? 😡</Aside>
+
+### Tabs
+
+```jsx
+import { Tabs, TabItem } from '@/components/user';
+
+<Tabs>
+  <TabItem label="Stars">Sirius, Vega, Betelgeuse</TabItem>
+  <TabItem label="Moons">Io, Europa, Ganymede</TabItem>
+</Tabs>
+```
+
+Like this:
+
+import { Tabs, TabItem } from '@/components/user';
+
+<Tabs>
+  <TabItem label="Stars">Sirius, Vega, Betelgeuse</TabItem>
+  <TabItem label="Moons">Io, Europa, Ganymede</TabItem>
+</Tabs>
+
+## List
+
+### CardList
+
+```jsx
+import { CardList } from '@/components/user'
+
+<CardList title='A list' list={
+  [{title: 'I am hidden!'}]
+} collapse />
+<CardList title='A list' list={
+  [
+    { title: 'Lorem ipsum', link: '#' },
+    { title: 'Dolor sit amet', children: [{
+      title: 'Vidit suscipit', link: '#'
+    }] }
+  ]
+} />
+```
+
+Like this:
+
+import { CardList } from '@/components/user'
+
+<CardList title='A list' list={
+  [{title: 'I am hidden!'}]
+} collapse />
+<CardList title='A list' list={
+  [
+    { title: 'Lorem ipsum', link: '#' },
+    { title: 'Dolor sit amet', children: [{
+      title: 'Vidit suscipit', link: '#'
+    }] }
+  ]
+} />
+
+### Timeline
+
+```jsx
+import { Timeline } from '@/components/user'
+
+<Timeline events={
+  [
+    { date: 'August 2021', content: 'Hello' },
+    { date: 'August 2022', content: '<i>World!</i>' },
+  ]
+} />
+```
+
+Like this:
+
+import { Timeline } from '@/components/user'
+
+<Timeline events={
+  [
+    { date: 'August 2021', content: 'Hello' },
+    { date: 'August 2022', content: '<i>World!</i>' },
+  ]
+} />
+
+### Steps
+
+```jsx
+import { Steps } from '@/components/user'
+
+How to Yi Jian San Lian:
+
+<Steps>
+1. Dian Zan
+2. Tou Bi
+3. Shou Cang
+</Steps>
+```
+
+Like this:
+
+import { Steps } from '@/components/user'
+
+How to Yi Jian San Lian:
+
+<Steps>
+1. Dian Zan
+2. Tou Bi
+3. Shou Cang
+</Steps>
+
+## Simple Text Rerender
+
+### Button
+
+```jsx
+import { Button } from '@/components/user'
+
+<div class='flex gap-x-2'>
+  <Button as='div' title='Simple' />
+  <Button as='a' href='#button' title='Link style' style='ahead' class='not-prose' />
+  <Button as='div' title='Back' style='back' />
+  <Button as='div' title='Pill style' style='pill' />
+  <Button as='div' style='pill'><i>Italic</i></Button>
+</div>
+```
+
+Like this:
+
+import { Button } from '@/components/user'
+
+<div class='flex gap-x-2'>
+  <Button as='div' title='Simple' />
+  <Button as='a' href='#button' title='Link style' style='ahead' class='not-prose' />
+  <Button as='div' title='Back' style='back' />
+  <Button as='div' title='Pill style' style='pill' />
+  <Button as='div' style='pill'><i>Italic</i></Button>
+</div>
+
+### Spoiler
+
+```jsx
+import { Spoiler } from '@/components/user'
+
+<Spoiler>No one can find me.</Spoiler> But I am exposed here.
+```
+
+Like this:
+
+import { Spoiler } from '@/components/user'
+
+<Spoiler>No one can find me.</Spoiler> But I am exposed here.
+
+### Formatted Date
+
+```jsx
+import { FormattedDate } from '@/components/user'
+
+<FormattedDate date={new Date('2021-08-01')} dateTimeOptions={{ month: 'short' }} />
+```
+
+Like this:
+
+import { FormattedDate } from '@/components/user'
+
+<FormattedDate date={new Date('2021-08-01')} dateTimeOptions={{ month: 'short' }} />
+
+### Label
+
+```jsx
+import { Label } from '@/components/user'
+
+<Label title='Hello' />
+```
+
+Like this:
+
+import { Label } from '@/components/user'
+
+<Label title='Hello' />
+
+There's also some [Advanced Components](/docs/integrations/advanced-components), which may suit for you. Hope you enjoy using these components!

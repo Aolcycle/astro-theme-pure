@@ -1,13 +1,11 @@
 ---
-import Collapse from '@/components/Collapse.astro'
-import Timeline from '@/components/Timeline.astro'
-import FriendList from '@/components/links/FriendList.astro'
 import PageLayout from '@/layouts/CommonPage.astro'
-import Comment from '@/components/Comment.astro'
-import { siteConfig } from '@/site-config'
-
 import links from 'public/links.json'
-import '@/assets/styles/links.css'
+
+import FriendList from '@/components/links/FriendList.astro'
+import Comment from '@/components/pages/Comment.astro'
+import { Collapse, Timeline } from '@/components/user'
+import { siteConfig } from '@/site-config'
 
 const headings = [
   {
@@ -47,7 +45,7 @@ const friendlist = links.friends
       events={[
         { date: '2024-07-01', content: 'Lorem ipsum dolor sit amet.' },
         { date: '2024-07-01', content: 'vidit suscipit at mei.' },
-        { date: '2024-07-01', content: 'Quem denique mea id.' },
+        { date: '2024-07-01', content: 'Quem denique mea id.' }
       ]}
     />
   </Collapse>
@@ -56,11 +54,11 @@ const friendlist = links.friends
   <!-- apply-links -->
   <h2 id='apply-links'>Apply Links</h2>
   <p>本站信息如下：</p>
-  <blockquote class='not-prose border-s-4 ps-4'>
-    <p>名称：<code>{siteConfig.applyFriendTip.name}</code></p>
-    <p>简介：<code>{siteConfig.applyFriendTip.slogan}</code></p>
-    <p>链接：<code>{siteConfig.applyFriendTip.url}</code></p>
-    <p>图标：<code>{siteConfig.applyFriendTip.avatar}</code></p>
+  <blockquote class='not-prose break-words border-s-4 ps-4'>
+    <p>名称：<code>{siteConfig.links.applyTip.name}</code></p>
+    <p>简介：<code>{siteConfig.links.applyTip.desc}</code></p>
+    <p>链接：<code>{siteConfig.links.applyTip.url}</code></p>
+    <p>图标：<code>{siteConfig.links.applyTip.avatar}</code></p>
   </blockquote>
 
   <p>

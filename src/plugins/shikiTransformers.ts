@@ -1,6 +1,8 @@
 import { h } from 'hastscript'
 import type { ShikiTransformer } from 'shiki'
 
+export { transformerNotationDiff } from './shikiOfficialTransformers'
+
 function parseMetaString(str = '') {
   return Object.fromEntries(
     str.split(' ').reduce((acc: [string, string | true][], cur) => {
@@ -14,6 +16,7 @@ function parseMetaString(str = '') {
   )
 }
 
+// Nest a div in the outer layer
 export const updateStyle = (): ShikiTransformer => {
   return {
     name: 'shiki-transformer-update-style',
@@ -31,6 +34,7 @@ export const updateStyle = (): ShikiTransformer => {
   }
 }
 
+// Process meta string, like ```ts title="test.ts"
 export const processMeta = (): ShikiTransformer => {
   return {
     name: 'shiki-transformer-process-meta',
@@ -44,6 +48,7 @@ export const processMeta = (): ShikiTransformer => {
   }
 }
 
+// Add a title to the code block
 export const addTitle = (): ShikiTransformer => {
   return {
     name: 'shiki-transformer-add-title',
@@ -51,10 +56,10 @@ export const addTitle = (): ShikiTransformer => {
       const rawMeta = this.options.meta?.__raw
       if (!rawMeta) return
       const meta = parseMetaString(rawMeta)
-      if (this.options.meta) {
-        Object.assign(this.options.meta, meta)
-      }
-      console.log(this.options.meta)
+      // If meta is needed to parse in other transformers
+      // if (this.options.meta) {
+      //   Object.assign(this.options.meta, meta)
+      // }
 
       if (!meta.title) return
 
@@ -62,7 +67,7 @@ export const addTitle = (): ShikiTransformer => {
         'div',
         {
           class:
-            'title absolute top-2 left-3 text-sm text-foreground px-2 py-0.5 bg-primary-foreground rounded-lg border border-border'
+            'title absolute top-2 left-2 text-sm text-foreground px-3 py-1 bg-primary-foreground rounded-lg border border-border'
         },
         meta.title.toString()
       )
@@ -71,6 +76,7 @@ export const addTitle = (): ShikiTransformer => {
   }
 }
 
+// Add a language tag to the code block
 export const addLanguage = (): ShikiTransformer => {
   return {
     name: 'shiki-transformer-add-language',
@@ -88,6 +94,7 @@ export const addLanguage = (): ShikiTransformer => {
   }
 }
 
+// Add a copy button to the code block
 export const addCopyButton = (timeout?: number): ShikiTransformer => {
   const toggleMs = timeout || 3000
 

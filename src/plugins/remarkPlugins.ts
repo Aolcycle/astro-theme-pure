@@ -1,17 +1,36 @@
+import type {
+  Blockquote,
+  FootnoteDefinition,
+  Html,
+  Link,
+  ListItem,
+  Node,
+  Paragraph,
+  Root
+} from 'mdast'
 import getReadingTime from 'reading-time'
-import { toString } from 'mdast-util-to-string'
+import type { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
-import type { Root, Paragraph, Link, Html, Blockquote, FootnoteDefinition, ListItem } from 'mdast'
-import { fetchGitHubApi, fetchArxivApi } from './api'
 
-export function remarkReadingTime() {
-  // @ts-expect-error:next-line
+import { fetchArxivApi, fetchGitHubApi } from '../utils/api'
+import toString from './mdastUtilToString'
+
+export const remarkReadingTime: Plugin<[], Root> = function () {
   return function (tree, { data }) {
     const textOnPage = toString(tree)
     const readingTime = getReadingTime(textOnPage)
     // readingTime.text will give us minutes read as a friendly string,
     // i.e. "3 min read"
-    data.astro.frontmatter.minutesRead = readingTime.text
+    const astroData = data as { astro: { frontmatter: { minutesRead: string } } }
+    astroData.astro.frontmatter.minutesRead = readingTime.text
+  }
+}
+
+export const remarkAddZoomable: Plugin<[string], Root> = function (className = 'zoomable') {
+  return function (tree) {
+    visit(tree, 'image', (node: Node) => {
+      node.data = { hProperties: { class: className } }
+    })
   }
 }
 
@@ -37,11 +56,13 @@ const initGitHubCard = async (
         const data = await fetchGitHubApi(`https://api.github.com/repos/${owner}/${repo}`)
         // sleep 1 second to avoid rate limit
         await new Promise((resolve) => setTimeout(resolve, 1000))
-        const languagePart = data.language ? `<span class="flex items-center text-gray-700 dark:text-gray-400">
+        const languagePart = data.language
+          ? `<span class="flex items-center text-gray-700 dark:text-gray-400">
               <span class="mr-2 inline-block h-3 w-3 rounded-full bg-gray-700 dark:bg-slate-100"
               ></span>
               ${data.language}
-            </span>` : ''
+            </span>`
+          : ''
 
         const newNode: Html = {
           type: 'html',

@@ -1,8 +1,9 @@
-import { fontFamily } from 'tailwindcss/defaultTheme'
 import typography from '@tailwindcss/typography'
+import { fontFamily } from 'tailwindcss/defaultTheme'
 
 const fg = 'hsl(var(--foreground) / var(--tw-text-opacity, 1))'
 const fgMuted = 'hsl(var(--muted-foreground) / var(--tw-text-opacity, 1))'
+const bgMuted = 'hsl(var(--muted) / var(--tw-bg-opacity, 1))'
 
 const typographyConfig = ({ theme }) => ({
   pure: {
@@ -12,21 +13,19 @@ const typographyConfig = ({ theme }) => ({
       '--tw-prose-links': fg,
       '--tw-prose-quotes': fgMuted,
       '--tw-prose-code:': fg,
+      '--tw-prose-pre-code': fgMuted,
+      '--tw-prose-pre-bg': bgMuted,
 
-      h2: {
-        '&:target::before': {
-          display: 'inline-block',
-          content: '"#"',
-          marginInlineStart: '-30px',
-          width: '30px'
-        }
-      },
-      h3: {
-        '&:target::before': {
-          display: 'inline-block',
-          content: '"#"',
-          marginInlineStart: '-30px',
-          width: '30px'
+      'h2, h3, h4, h5, h6': {
+        scrollMarginTop: '3rem',
+        '& > a': {
+          marginInlineStart: '0.75rem',
+          color: fgMuted,
+          transition: 'opacity 0.2s ease',
+          opacity: '0'
+        },
+        '&:hover > a, &:target > a': {
+          opacity: '1'
         }
       },
       img: {
@@ -34,7 +33,7 @@ const typographyConfig = ({ theme }) => ({
         margin: '0 auto'
       },
       table: {
-        display: 'block',
+        // display: 'block',
         overflowX: 'scroll'
       },
       blockquote: {
@@ -67,7 +66,10 @@ const typographyConfig = ({ theme }) => ({
 
 /** @type {import('tailwindcss').Config} */
 const config = {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: [
+    './src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
+    './node_modules/astro-pure/components/**/*.astro'
+  ],
   darkMode: ['class'],
   safelist: ['dark'],
   plugins: [typography()],

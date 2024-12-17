@@ -2,61 +2,89 @@
 
 [English](./README.md) | [简体中文](./README-zh-CN.md)
 
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/t/cworld1/astro-theme-pure?label=commits&style=flat-square)](https://github.com/cworld1/astro-theme-pure/commits)
-[![GitHub stars](https://img.shields.io/github/stars/cworld1/astro-theme-pure?style=flat-square)](https://github.com/cworld1/astro-theme-pure/stargazers)
-[![vercel status](https://img.shields.io/website?down_message=offline&label=vercel&logo=vercel&style=flat-square&up_message=online&url=https%3A%2F%2Fastro-theme-pure.vercel.app)](#)
-[![GitHub license](https://img.shields.io/github/license/cworld1/astro-theme-pure?style=flat-square)](https://github.com/cworld1/astro-theme-pure/blob/main/LICENSE)
+A simple, fast and powerful blog theme built by Astro.
 
-A simple, clean but powerful blog theme build by astro.
+[![GitHub deployments](https://img.shields.io/github/deployments/cworld1/astro-theme-pure/production?style=flat&logo=vercel&label=vercel)](https://astro-pure.js.org/)
+[![NPM Version](https://img.shields.io/npm/v/astro-pure?style=flat)](https://www.npmjs.com/package/astro-pure)
+[![GitHub License](https://img.shields.io/github/license/cworld1/astro-theme-pure?style=flat)](https://github.com/cworld1/astro-theme-pure/blob/main/LICENSE)
 
-![image](https://github.com/user-attachments/assets/7eb17ddf-fd5f-42f3-a337-675a21ba7a27)
+> [!CAUTION]
+> 🚧🚧🚧 We are currently on develop about upgrading to Astro v5 and developing npm package method 🚧🚧🚧
+>
+> Known issues for new version: a. Cannot use Node v22 on Vercel ([waiting for new release](https://github.com/withastro/adapters/issues/471)); b. Cannot pack sitemap and pagefind resources on Vercel ([waiting for fixing](https://github.com/withastro/astro/issues/12663))
+>
+> If you want to have a stable experience, try [v3.1.4](https://github.com/cworld1/astro-theme-pure/tree/v3.1.4) instead. We'll release new version if the it is enough stable for users. And any feedback of newly unreleased code is also welcome.（除非你只是来帮忙做测试，请不要在任何生产环境中使用非稳定版本！）
+
+![image](./.github/assets/header.webp)
+![image](./.github/assets/body.webp)
 
 ## Introduction
 
-Checkout [Demo Site →](https://astro-theme-pure.vercel.app/)
+Checkout [Demo Site →](https://astro-pure.js.org/)
 
-## Usage
+### :fire: Features
 
-[Docs](https://astro-theme-pure.vercel.app/docs/list) | [Showcase](https://github.com/cworld1/astro-theme-pure/issues/10)
+- [x] :rocket: Fast & high performance
+- [x] :star: Simple & clean design
+- [x] :iphone: Responsive design
+- [x] :mag: Full-site search built with [pagefind](https://pagefind.app/)
+- [x] :world_map: Sitemap & RSS feed
+- [x] :spider_web: SEO-friendly
+- [x] :book: TOC (table of contents)
+- [x] :framed_picture: Dynamic open graph generation for posts
+- [x] :framed_picture: Mediumzoom lightbox for images
+
+### :package: Components
+
+Theme includes a lot of components, which can not only be used in the theme, but also in other astro projects.
+
+> For other astro projects, Tailwind CSS is required.
+
+- Basic components: `Aside`, `Tabs`, `Timeline`, `Steps`, `Spoiler`...
+- Advanced components: `GithubCard`, `LinkPreview`, `Quote`, `QRCode`...
+
+### :white_check_mark: Lighthouse score
+
+[![lighthouse-score](./.github/assets/lighthouse-score.png)](https://pagespeed.web.dev/analysis/https-cworld-top/o229zrt5o4?form_factor=mobile&hl=en)
+
+## Documentation
+
+[Docs](https://astro-pure.js.org/docs/list) | [Showcase](https://github.com/cworld1/astro-theme-pure/issues/10)
+
+## Package
+
+See [astro-theme-pure](https://www.npmjs.com/package/astro-pure) on npm.
 
 ## Local development
 
 Environment requirements:
 
 - [Nodejs](https://nodejs.org/): 18.0.0+
-- [Bun](https://bun.sh/): 1.0.0+
 
 Clone the repository:
 
 ```shell
 git clone https://github.com/cworld1/astro-theme-pure.git
-```
-
-Install dependencies:
-
-```shell
 cd astro-theme-pure
+```
+
+Useful commands:
+
+```shell
+# install dependencies
 bun install
-```
 
-Start the development server:
-
-```shell
+# start the dev server
 bun dev
-# For Windows, Bun has not yet implemented background tasks. So for Bun, use the following command instead:
-# bun start
-```
 
-Or build (you may need to use node.js SSR firstly):
-
-```shell
+# build the project
 bun run build
-```
 
-Preview:
-
-```shell
+# preview (after the build)
 bun preview
+
+# create a new post
+bun new-post
 ```
 
 ## Contributions
@@ -67,6 +95,7 @@ To spend more time coding and less time fiddling with whitespace, this project u
 
 - [Astro Cactus](https://github.com/chrismwilliams/astro-theme-cactus)
 - [Astro Resume](https://github.com/srleom/astro-theme-resume)
+- [Starlight](https://github.com/withastro/starlight)
 
 ## License
 

@@ -1,51 +1,45 @@
 // @ts-check
 
-import { defineConfig } from 'astro/config'
-
+import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 // Adapter
-// 1. Vercel (serverless)
-import vercelServerless from '@astrojs/vercel/serverless'
-// 2. Vercel (static)
-// import vercelStatic from '@astrojs/vercel/static';
-// 3. Local (standalone)
-// import node from '@astrojs/node'
-// ---
-
+import vercel from '@astrojs/vercel'
 // Integrations
-import mdx from '@astrojs/mdx'
-import sitemap from '@astrojs/sitemap'
-import tailwind from '@astrojs/tailwind'
 import icon from 'astro-icon'
-// Markdown
-import {
-  remarkReadingTime,
-  remarkAddZoomable,
-  remarkGithubCards,
-  remarkArxivCards
-} from './src/plugins/remarkPlugins.ts'
-import rehypeExternalLinks from 'rehype-external-links'
+import AstroPureIntegration from 'astro-pure'
+import { defineConfig } from 'astro/config'
+// Rehype & remark packages
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
-import { siteConfig } from './src/site.config.ts'
+
+// import { visualizer } from 'rollup-plugin-visualizer'
+
+// import { pagefindConfig } from './src/plugins/pagefind.ts'
+// Local rehype & remark plugins
+import rehypeAutolinkHeadings from './src/plugins/rehypeAutolinkHeadings.ts'
+// Markdown
+import { remarkArxivCards, remarkReadingTime } from './src/plugins/remarkPlugins.ts'
+// Shiki
 import {
   addCopyButton,
-  addTitle,
   addLanguage,
-  updateStyle,
-  transformerNotationDiff
+  addTitle,
+  transformerNotationDiff,
+  transformerNotationHighlight,
+  updateStyle
 } from './src/plugins/shikiTransformers.ts'
+import config from './src/site.config.ts'
 
 // https://astro.build/config
 export default defineConfig({
   // Top-Level Options
-  site: siteConfig.site,
+  site: 'https://astro-docs.vercel.app',
   // base: '/docs',
   trailingSlash: 'never',
-  output: 'server',
 
   // Adapter
   // 1. Vercel (serverless)
-  adapter: vercelServerless(),
+  adapter: vercel(),
+  output: 'server',
   // 2. Vercel (static)
   // adapter: vercelStatic(),
   // 3. Local (standalone)
@@ -59,14 +53,17 @@ export default defineConfig({
   },
 
   integrations: [
-    tailwind({ applyBaseStyles: false }),
-    sitemap(),
-    mdx(),
     icon(),
-    (await import('@playform/compress')).default({
-      SVG: false,
-      Exclude: ['index.*.js']
-    })
+    // astro-pure will automatically add sitemap, mdx & tailwind
+    // sitemap(),
+    // mdx(),
+    // tailwind({ applyBaseStyles: false }),
+    AstroPureIntegration(config)
+    // (await import('@playform/compress')).default({
+    //   SVG: false,
+    //   Exclude: ['index.*.js']
+    // }),
+    // pagefindConfig()
   ],
   // root: './my-project-directory',
 
@@ -78,25 +75,19 @@ export default defineConfig({
   },
   // Markdown Options
   markdown: {
-    remarkPlugins: [
-      remarkReadingTime,
-      remarkAddZoomable,
-      remarkMath,
-      remarkGithubCards,
-      remarkArxivCards
-    ],
+    remarkPlugins: [remarkReadingTime, remarkMath, remarkArxivCards],
     rehypePlugins: [
       [rehypeKatex, {}],
+      rehypeHeadingIds,
       [
-        rehypeExternalLinks,
+        rehypeAutolinkHeadings,
         {
-          ...(siteConfig.content.externalLinkArrow && { content: { type: 'text', value: ' ↗' } }),
-          target: '_blank',
-          rel: ['nofollow, noopener, noreferrer']
+          behavior: 'append',
+          properties: { className: ['anchor'] },
+          content: { type: 'text', value: '#' }
         }
       ]
     ],
-    // remarkRehype: { },
     // https://docs.astro.build/en/guides/syntax-highlighting/
     shikiConfig: {
       themes: {
@@ -105,11 +96,23 @@ export default defineConfig({
       },
       transformers: [
         transformerNotationDiff(),
+        transformerNotationHighlight(),
         updateStyle(),
         addTitle(),
         addLanguage(),
         addCopyButton(2000)
       ]
     }
+  },
+  experimental: {
+    svg: true
   }
+  // vite: {
+  //   plugins: [
+  //     visualizer({
+  //       emitFile: true,
+  //       filename: 'stats.html'
+  //     })
+  //   ]
+  // }
 })
